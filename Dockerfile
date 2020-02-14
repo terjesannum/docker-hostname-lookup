@@ -1,8 +1,12 @@
 FROM perl:5.30.1-slim
 
+# Hostname to lookup
 ENV LOOKUP_HOSTNAME "google.com"
+# Pause between lookups in milliseconds
 ENV LOOKUP_PAUSE "100"
+# Number of lookups between printing stats
 ENV LOOKUP_STATS "10"
+# Lookup timeout in milliseconds
 ENV LOOKUP_TIMEOUT "50"
 
 ADD https://raw.githubusercontent.com/terjesannum/scripts/master/hostname-lookup.pl /usr/src
