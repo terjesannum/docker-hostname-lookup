@@ -15,7 +15,7 @@ ENV LOOKUP_USEVC ""
 
 RUN cpan -i Net::DNS
 
-ADD https://raw.githubusercontent.com/terjesannum/scripts/08c6cce9fa3f020f7e54adc4f627da60393f7790/hostname-lookup.pl /usr/src
+ADD https://raw.githubusercontent.com/terjesannum/scripts/f3a09df257d94197393ba5881b1e733550b3e534/hostname-lookup.pl /usr/src
 RUN chmod 755 /usr/src/hostname-lookup.pl
 
 WORKDIR /usr/src
