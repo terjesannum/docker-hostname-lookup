@@ -1,14 +1,22 @@
-FROM perl:5.30.1-slim
+FROM perl:5.32.0
 
 # Hostname to lookup
 ENV LOOKUP_HOSTNAME "google.com"
+# Nameserver to use
+ENV LOOKUP_NAMESERVER ""
 # Pause between lookups in milliseconds
 ENV LOOKUP_PAUSE "100"
 # Number of lookups between printing stats
 ENV LOOKUP_STATS "10"
 # Lookup timeout in milliseconds
 ENV LOOKUP_TIMEOUT "50"
+# Set LOOKUP_USEVC to "--usevc" to enable usevc
+ENV LOOKUP_USEVC ""
 
-ADD https://raw.githubusercontent.com/terjesannum/scripts/master/hostname-lookup.pl /usr/src
+RUN cpan -i Net::DNS
+
+ADD https://raw.githubusercontent.com/terjesannum/scripts/08c6cce9fa3f020f7e54adc4f627da60393f7790/hostname-lookup.pl /usr/src
+RUN chmod 755 /usr/src/hostname-lookup.pl
+
 WORKDIR /usr/src
-CMD [ "sh", "-c", "exec perl /usr/src/hostname-lookup.pl $LOOKUP_HOSTNAME $LOOKUP_PAUSE $LOOKUP_STATS $LOOKUP_TIMEOUT" ]
+CMD [ "sh", "-c", "exec /usr/src/hostname-lookup.pl --host=$LOOKUP_HOSTNAME --nameserver=$LOOKUP_NAMESERVER --sleep=$LOOKUP_PAUSE --stats=$LOOKUP_STATS --timeout=$LOOKUP_TIMEOUT $LOOKUP_USEVC"]
